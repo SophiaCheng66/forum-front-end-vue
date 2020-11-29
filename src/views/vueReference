@@ -1,0 +1,443 @@
+  <!-- part1 -->
+         
+            <div class="card mb-3">
+              <div class="row no-gutters">
+                <div class="col-md-4">
+                  <img
+                    src="https://via.placeholder.com/300"
+                    width="300px"
+                    height="300px"
+                  />
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">user2</h5>
+                    <p class="card-text">user2@example.com</p>
+                    <ul class="list-unstyled list-inline">
+                      <li><strong>41</strong> 已評論餐廳</li>
+                      <li><strong>5</strong> 收藏的餐廳</li>
+                      <li><strong>0</strong> followings (追蹤者)</li>
+                      <li><strong>0</strong> followers (追隨者)</li>
+                    </ul>
+                    <p></p>
+                    <form
+                      action="/following/3"
+                      method="POST"
+                      style="display: contents"
+                    >
+                      <button type="submit" class="btn btn-primary">
+                        追蹤
+                      </button>
+                    </form>
+                    <p></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- part2 -->
+            <div class="row">
+              <div class="col-md-4">
+                <div class="card">
+                  <div class="card-header">
+                    <strong>0</strong> followings (追蹤者)
+                  </div>
+                  <div class="card-body"></div>
+                </div>
+               
+
+                 <!-- part3 -->
+                <br />
+                <div class="card">
+                  <div class="card-header">
+                    <strong>0</strong> followers (追隨者)
+                  </div>
+                  <div class="card-body"></div>
+                </div>
+              </div>
+
+              <!-- part4-->
+              <div class="col-md-8">
+                <div class="card">
+                  <div class="card-header"><strong>41</strong> 已評論餐廳</div>
+                  <div class="card-body">
+                    <a href="/restaurants/2">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=74.39642698470448"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/5">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=96.10569340226543"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/6">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=42.92691470956817"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/9">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=9.825477787450376"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/11">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=35.25135222681837"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/12">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=67.20599406459549"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/14">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=86.86224973817669"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/17">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=43.46318958897266"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/18">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=57.42621504271283"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/22">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=33.53858015463336"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/27">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=97.99635983845806"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/30">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=76.80523729754508"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/32">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=58.53828215281756"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/33">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=93.39441694417047"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/34">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=79.05354972845838"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/36">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=91.89373721966176"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/42">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=36.091409125583574"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/44">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=99.6244231930455"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/46">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=17.630825864006482"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/4">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=57.05367081822943"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/7">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=17.46646129183562"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/13">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=55.830999586431275"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/16">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=51.038357281059454"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/23">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=51.433803549301956"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/26">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=91.4615016363926"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/29">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=88.36437481272672"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/37">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=36.57931859287083"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/45">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=23.43764027957096"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/48">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=54.357470974798375"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/1">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=51.756313654300044"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/3">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=8.88156169757055"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/8">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=46.54040641576476"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/10">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=90.3851170471334"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/15">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=13.722438193927111"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/24">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=36.49991076679848"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/25">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=76.02641379241058"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/28">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=73.36893852694308"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/38">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=95.88012832962734"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/40">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=8.760735599003189"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/43">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=69.83844016071599"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/47">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=58.39944310924374"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                  </div>
+                </div>
+                <br />
+
+                <!-- part5-->
+                <div class="card">
+                  <div class="card-header"><strong>5</strong> 收藏的餐廳</div>
+                  <div class="card-body">
+                    <a href="/restaurants/13">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=55.830999586431275"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/11">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=35.25135222681837"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/5">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=96.10569340226543"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/26">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=91.4615016363926"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                    <a href="/restaurants/6">
+                      <img
+                        src="https://loremflickr.com/320/240/restaurant,food/?random=42.92691470956817"
+                        width="60"
+                        height="60"
+                        class="avatar"
+                      />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+       

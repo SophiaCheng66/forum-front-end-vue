@@ -1,28 +1,26 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="restaurant-forum">
+    <Navbar />
+
+    <main class="mt-5 bg-white">
+      <!--router-view代表每一頁的內容 -->
+      <router-view />
+    </main>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import "bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Navbar from "./components/Navbar.vue";
 
 export default {
-  name: 'App',
+  //在這頁裡會有一個外部載入的組件components
   components: {
-    HelloWorld
-  }
-}
+    //組件的名字叫 Navbar，內容來自載入Navbar的地方,當屬性名稱和值都一樣的時候可以簡寫成一個，之後把它放入template裡，當成html裡的標籤
+    Navbar: Navbar, //(Navbar)
+  },
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+
