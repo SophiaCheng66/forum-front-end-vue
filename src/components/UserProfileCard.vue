@@ -28,8 +28,16 @@
           <form action="/following/3" method="POST" style="display: contents">
             <button
               type="submit"
+              class="btn btn-primary"
+              v-if="currentUser.isAdmin"
+            >
+              Edit
+            </button>
+
+            <button
+              type="submit"
               class="btn btn-danger"
-              v-if="profile.isFollowed"
+              v-else-if="profile.isFollowed"
               @click.stop.prevent="cancelFollowing"
             >
               取消追蹤
@@ -61,11 +69,16 @@ export default {
       type: Boolean,
       required: true,
     },
+    initialcurrentUser: {
+      type: Object,
+      required: true,
+    },
   },
 
   data() {
     return {
       profile: this.initialprofile,
+      currentUser: this.initialcurrentUser,
     };
   },
 
