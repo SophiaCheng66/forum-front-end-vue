@@ -109,6 +109,18 @@ export default new Router({
       //動態載入
       component: () => import('../views/AdminRestaurant.vue')
     },
+    {
+      path: '/admin/categories',
+      name: 'admin-categories',
+      //動態載入
+      component: () => import('../views/AdminCategories.vue')
+    },
+    {
+      path: '/admin/users',
+      name: 'admin-users',
+      //動態載入
+      component: () => import('../views/AdminUsers.vue')
+    },
 
     {
       path: '/*',

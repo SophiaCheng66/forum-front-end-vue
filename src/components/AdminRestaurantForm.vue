@@ -230,7 +230,7 @@ export default {
     },
     handleSubmit(event) {
       // console.log(event);
-      //先抓到使用者送出的form
+      //先抓到使用者送出的form，在form上做v-on
       const form = event.target;
       //在前端，若想把整個表單傳送出去，其中一個方法是js提供的FormData()，只要我們把要傳送的form放進去之後，它就會自動幫我們產生一個類似form的東西，就可以直接把from傳到後端去。
       const formData = new FormData(form);
