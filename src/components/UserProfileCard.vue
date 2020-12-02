@@ -26,13 +26,14 @@
           </ul>
           <p></p>
           <form action="/following/3" method="POST" style="display: contents">
-            <button
-              type="submit"
-              class="btn btn-primary"
-              v-if="currentUser.isAdmin"
-            >
-              Edit
-            </button>
+            <template v-if="currentUser.isAdmin">
+              <router-link
+                :to="{ name: 'users-edit', params: { id: profile.id } }"
+                ><button type="submit" class="btn btn-primary">
+                  Edit
+                </button></router-link
+              >
+            </template>
 
             <button
               type="submit"
