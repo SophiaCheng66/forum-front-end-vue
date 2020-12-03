@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import authorizationAPI from "../apis/authorization.js";
 export default {
   //data是一個函式
   data() {
@@ -70,6 +71,17 @@ export default {
           password: this.password,
         })
       );
+
+      // TODO: 向後端驗證使用者登入資訊是否合法
+      // 呼叫 axios 之後會回傳一個 Promise 物件,就可以用then把資料接進來，得到的資料是response，可以先把response console出來看一下
+      authorizationAPI
+        .signIn({ email: this.email, password: this.password })
+        .then((response) => {
+          const { data } = response;
+          localStorage.setItem("token", data.token);
+
+          this.$router.push("/restaurants");
+        });
     },
   },
 
@@ -80,7 +92,7 @@ export default {
   //         password: this.password
   //       })
 
-  //       // TODO: 向後端驗證使用者登入資訊是否合法
+  //       /
   //       console.log('data', data)
   //     }
   //   }
