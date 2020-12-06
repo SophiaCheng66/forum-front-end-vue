@@ -10,7 +10,7 @@
       >
       <p class="mt-3">
         <button
-          @click.stop.prevent="cancelFollowed"
+          @click.stop.prevent="cancelFollowed(usersData.id)"
           type="button"
           class="btn btn-danger"
           v-if="usersData.isFollowed"
@@ -21,7 +21,7 @@
           v-else
           type="button"
           class="btn btn-primary"
-          @click.stop.prevent="addFollowed"
+          @click.stop.prevent="addFollowed(usersData.id)"
         >
           追蹤
         </button>
@@ -31,33 +31,97 @@
 </template>
 
 <script>
+import userAPI from "../apis/user.js";
+import { Toast } from "../utility/helpers";
 export default {
+  name: "Users",
   props: {
     initialUsers: {
       type: Object,
       required: true,
     },
+
+    // initialUsersDatasList: {
+    //   type: Array,
+    //   required: true,
+    // },
   },
   data() {
     return {
       usersData: this.initialUsers,
+      // UsersDatasList: this.initialUsersDatasList,
+      // UsersDatasListId: -1,
     };
   },
 
+  // created() {
+  //   this.fetchUsersDatasList();
+  // },
+
   methods: {
-    cancelFollowed() {
-      this.usersData = {
-        ...this.usersData,
-        isFollowed: false,
-      };
+    // fetchUsersDatasList() {
+    //   const { data } = this.UsersDatasList;
+    //   const { id } = data;
+    //   UsersDatasListId = id;
+    // },
+
+    async cancelFollowed(userId) {
+      try {
+        const response = await userAPI.deleteFollowing({ userId });
+
+        console.log(response);
+        const { data } = response;
+
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+
+        this.usersData = {
+          ...this.usersData,
+          isFollowed: false,
+          FollowerCount: this.usersData.FollowerCount - 1,
+        };
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法取消追蹤，請稍後再試",
+        });
+      }
     },
 
-    addFollowed() {
-      this.usersData = {
-        ...this.usersData,
-        isFollowed: true,
-      };
+    async addFollowed(userId) {
+      try {
+        const response = await userAPI.addFollowing({ userId });
+
+        console.log(response);
+        const { data } = response;
+
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+
+        this.usersData = {
+          ...this.usersData,
+          isFollowed: true,
+          FollowerCount: this.usersData.FollowerCount + 1,
+        };
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法追蹤，請稍後再試",
+        });
+      }
     },
+
+    // addFollowed(userId) {
+    //   this.usersData = {
+    //     ...this.usersData,
+    //     isFollowed: true,
+    //     FollowerCount: this.usersData.FollowerCount + 1,
+    //   };
+    // },
   },
 };
 </script>

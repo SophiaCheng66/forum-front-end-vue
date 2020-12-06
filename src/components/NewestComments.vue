@@ -5,16 +5,15 @@
       <div>
         <h4>
           <router-link :to="{ name: 'restaurant', params: { id: comment.id } }">
-            <!-- <router-link
-            :to="{ name: 'restaurant', params: { id: comment.restaurant.id } }"
-          > -->
-            {{ comment.Restaurant }}
+            {{ comment.Restaurant.name }}
             <!-- {{ comment.Restaurant.name }} -->
           </router-link>
         </h4>
         <p>{{ comment.text }}</p>
         by
-        <router-link :to="{ name: 'users-detail' }">
+        <router-link
+          :to="{ name: 'users-detail', params: { id: comment.UserId } }"
+        >
           {{ comment.User.name }}</router-link
         >
         {{ comment.createdAt | fromNow }}

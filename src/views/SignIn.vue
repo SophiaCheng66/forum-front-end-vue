@@ -34,7 +34,11 @@
         />
       </div>
 
-      <button class="btn btn-lg btn-primary btn-block mb-3" type="submit">
+      <button
+        class="btn btn-lg btn-primary btn-block mb-3"
+        type="submit"
+        :disabled="isProcessing"
+      >
         Submit
       </button>
 
@@ -51,51 +55,111 @@
 
 <script>
 import authorizationAPI from "../apis/authorization.js";
+import { Toast } from "../utility/helpers.js";
+
 export default {
   //data是一個函式
   data() {
     return {
       email: "",
       password: "",
+      isProcessing: false,
     };
   },
   //methods是一個物件
   methods: {
     //Submit事件是跟在表單(form)的
-    handleSubmit(e) {
-      // e.preventDefault();
-      //取得資料後，向後端送出資料，送出資料之前會轉成JSON格式，這是瀏覽器和伺服器之間溝通常用的格式。
-      console.log(
-        JSON.stringify({
+    async handleSubmit(e) {
+      try {
+        // e.preventDefault();
+        //取得資料後，向後端送出資料，送出資料之前會轉成JSON格式，這是瀏覽器和伺服器之間溝通常用的格式。
+        // console.log(
+        //   JSON.stringify({
+        //     email: this.email,
+        //     password: this.password,
+        //   })
+        // );
+
+        // TODO: 向後端驗證使用者登入資訊是否合法
+        // 呼叫 axios 之後會回傳一個 Promise 物件,就可以用then把資料接進來，得到的資料是response，可以先把response console出來看一下
+        if (!this.email || !this.password) {
+          Toast.fire({
+            icon: "warning",
+            title: "請填入 email 和 password",
+          });
+          return;
+        }
+        //防止使用者再次點擊表單
+        this.isProcessing = true;
+
+        //     authorizationAPI
+        //       .signIn({ email: this.email, password: this.password })
+        //       .then((response) => {
+        //         console.log(response);
+        //         const { data } = response;
+
+        //         if (data.status !== "success") {
+        //           throw new Error(data.message);
+        //         }
+
+        //         localStorage.setItem("token", data.token);
+
+        //         this.$router.push("/restaurants");
+        //       })
+        //       .catch((error) => {
+        //         // 將密碼欄位清空
+        //         this.password = "";
+        //         // 顯示錯誤提示
+        //         Toast.fire({
+        //           icon: "warning",
+        //           title: "請確認您輸入了正確的帳號密碼",
+        //         });
+        //         this.isProcessing = false;
+        //         console.log("error", error);
+        //       });
+        //   },
+        // },
+
+        const response = await authorizationAPI.signIn({
           email: this.email,
           password: this.password,
-        })
-      );
-
-      // TODO: 向後端驗證使用者登入資訊是否合法
-      // 呼叫 axios 之後會回傳一個 Promise 物件,就可以用then把資料接進來，得到的資料是response，可以先把response console出來看一下
-      authorizationAPI
-        .signIn({ email: this.email, password: this.password })
-        .then((response) => {
-          const { data } = response;
-          localStorage.setItem("token", data.token);
-
-          this.$router.push("/restaurants");
         });
+
+        console.log(response);
+        const { data } = response;
+
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+
+        localStorage.setItem("token", data.token);
+
+        this.$router.push("/restaurants");
+      } catch (error) {
+        // 將密碼欄位清空
+        this.password = "";
+        this.isProcessing = false;
+        // 顯示錯誤提示
+        Toast.fire({
+          icon: "warning",
+          title: "請確認您輸入了正確的帳號密碼",
+        });
+        console.log("error", error);
+      }
     },
+
+    //    methods: {
+    //     handleSubmit (e) {
+    //       const data = JSON.stringify({
+    //         email: this.email,
+    //         password: this.password
+    //       })
+
+    //       /
+    //       console.log('data', data)
+    //     }
+    //   }
+    // }
   },
-
-  //    methods: {
-  //     handleSubmit (e) {
-  //       const data = JSON.stringify({
-  //         email: this.email,
-  //         password: this.password
-  //       })
-
-  //       /
-  //       console.log('data', data)
-  //     }
-  //   }
-  // }
 };
 </script>

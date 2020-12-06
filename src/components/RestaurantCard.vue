@@ -3,7 +3,7 @@
     <div class="card mb-4">
       <img
         class="card-img-top"
-        :src="restaurant.image"
+        :src="restaurant.image | emptyImage"
         alt="Card image cap"
         width="286px"
         height="180px"
@@ -44,7 +44,7 @@
 
         <button
           v-if="restaurant.isLiked"
-          @click.stop.prevent="deleteLike"
+          @click.stop.prevent="deleteLike(restaurant.id)"
           type="button"
           class="btn btn-danger like mr-2"
         >
@@ -52,7 +52,7 @@
         </button>
         <button
           v-else
-          @click.stop.prevent="addLike"
+          @click.stop.prevent="addLike(restaurant.id)"
           type="button"
           class="btn btn-primary like mr-2"
         >
@@ -64,7 +64,12 @@
 </template>
 
 <script>
+import { emptyImageFilter } from "./../utility/mixins";
+import usersAPI from "../apis/user.js";
+import { Toast } from "../utility/helpers.js";
+
 export default {
+  mixins: [emptyImageFilter],
   props: {
     initialRestaurant: {
       type: Object,
@@ -77,35 +82,99 @@ export default {
     };
   },
   methods: {
-    deleteFavorite(restaurantId) {
-      this.restaurant = {
+    async deleteFavorite(restaurantId) {
+      try {
+        const response = await usersAPI.deleteFavorite({ restaurantId });
+
+        const { data } = response;
+        console.log(response);
+
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
         // 先複製一份this.restaurant，把裡面的isFavorited設定成false,當使用者點擊移除最愛的按鈕進入此method，this.restaurant就會等於這份複製並修改過的this.restaurant，原本的this.restaurant不會有改變
-        ...this.restaurant,
-        isFavorited: false,
-      };
+        this.restaurant = {
+          ...this.restaurant,
+          isFavorited: false,
+        };
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法將餐廳移除最愛，請稍後再試",
+        });
+      }
     },
 
-    addFavorite(restaurantId) {
-      console.log(this.restaurant);
-      this.restaurant = {
-        ...this.restaurant,
-        isFavorited: true,
-      };
-      console.log(this.restaurant);
+    async addFavorite(restaurantId) {
+      // console.log(this.restaurant);
+      try {
+        const response = await usersAPI.addFavorite({ restaurantId });
+        const { data } = response;
+        console.log(response);
+
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+
+        this.restaurant = {
+          ...this.restaurant,
+          isFavorited: true,
+        };
+        console.log(this.restaurant);
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法將餐廳加入最愛，請稍後再試",
+        });
+      }
     },
 
-    deleteLike() {
-      this.restaurant = {
-        ...this.restaurant,
-        isLiked: false,
-      };
+    async deleteLike(restaurantId) {
+      try {
+        const response = await usersAPI.deleteLike({ restaurantId });
+
+        const { data } = response;
+        console.log(response);
+
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+
+        this.restaurant = {
+          ...this.restaurant,
+          isLiked: false,
+        };
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法將餐廳取消按讚，請稍後再試",
+        });
+      }
     },
 
-    addLike() {
-      this.restaurant = {
-        ...this.restaurant,
-        isLiked: true,
-      };
+    async addLike(restaurantId) {
+      try {
+        const response = await usersAPI.addLike({ restaurantId });
+
+        const { data } = response;
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+
+        this.restaurant = {
+          ...this.restaurant,
+          isLiked: true,
+        };
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法將餐廳按讚，請稍後再試",
+        });
+      }
     },
   },
 };
