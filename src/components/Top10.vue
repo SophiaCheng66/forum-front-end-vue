@@ -47,6 +47,8 @@
 </template>
 
 <script>
+import usersAPI from "../apis/user.js";
+import { Toast } from "../utility/helpers.js";
 export default {
   props: {
     initialRestaurant: {
@@ -62,20 +64,52 @@ export default {
   },
 
   methods: {
-    deleteFavorite(restaurantId) {
-      console.log(restaurantId);
-      this.restaurant = {
-        ...this.restaurant,
-        isFavorited: false,
-      };
+    async deleteFavorite(restaurantId) {
+      try {
+        const response = await usersAPI.deleteFavorite({ restaurantId });
+        console.log(response);
+
+        const { data } = response;
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+
+        this.restaurant = {
+          ...this.restaurant,
+          isFavorited: false,
+          FavoriteCount: this.restaurant.FavoriteCount - 1,
+        };
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法將餐廳移除最愛，請稍後再試",
+        });
+      }
     },
 
-    addFavorite(restaurantId) {
-      console.log(restaurantId);
-      this.restaurant = {
-        ...this.restaurant,
-        isFavorited: true,
-      };
+    async addFavorite(restaurantId) {
+      try {
+        const response = await usersAPI.addFavorite({ restaurantId });
+        console.log(response);
+
+        const { data } = response;
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+
+        this.restaurant = {
+          ...this.restaurant,
+          isFavorited: true,
+          FavoriteCount: this.restaurant.FavoriteCount + 1,
+        };
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法將餐廳加入最愛，請稍後再試",
+        });
+      }
     },
   },
 };

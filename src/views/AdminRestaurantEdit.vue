@@ -9,29 +9,8 @@
 
 <script>
 import AdminRestaurantForm from "./../components/AdminRestaurantForm.vue";
-const dummyData = {
-  restaurant: {
-    id: 1,
-    name: "Maxie Trantow V",
-    tel: "890-533-5519 x71749",
-    address: "1268 Bosco Prairie",
-    opening_hours: "08:00",
-    description:
-      "Officiis aut excepturi ipsa. Et ratione eveniet unde laboriosam aut. Explicabo autem eos pariatur aut molestiae perspiciatis debitis. Et repellat consequatur sapiente velit.",
-    image:
-      "https://loremflickr.com/320/240/restaurant,food/?random=51.756313654300044",
-    viewCounts: 110,
-    createdAt: "2020-11-23T10:08:45.000Z",
-    updatedAt: "2020-11-30T13:30:41.000Z",
-    CategoryId: 4,
-    Category: {
-      id: 4,
-      name: "墨西哥料理",
-      createdAt: "2020-11-23T10:08:45.000Z",
-      updatedAt: "2020-11-23T10:08:45.000Z",
-    },
-  },
-};
+import adminAPI from "../apis/admin";
+import { Toast } from "../utility/helpers";
 
 export default {
   name: "AdminRestaurantEdit",
@@ -61,31 +40,48 @@ export default {
   },
 
   methods: {
-    fetchRestaurant(restaurantId) {
-      console.log(restaurantId);
-      const { restaurant } = dummyData;
-      const {
-        id,
-        name,
-        CategoryId,
-        tel,
-        address,
-        description,
-        image,
-        opening_hours,
-      } = restaurant;
+    async fetchRestaurant(restaurantId) {
+      try {
+        const response = await adminAPI.restaurants.getDetail({ restaurantId });
 
-      this.restaurant = {
-        // ...this.restaurant,
-        id,
-        name,
-        categoryId: CategoryId,
-        tel,
-        address,
-        description,
-        image,
-        openingHours: opening_hours,
-      };
+        console.log(response);
+        const { data } = response;
+
+        // console.log(restaurantId);
+
+        const {
+          id,
+          name,
+          CategoryId,
+          tel,
+          address,
+          description,
+          image,
+          opening_hours,
+        } = data.restaurant;
+
+        this.restaurant = {
+          // ...this.restaurant,
+          id,
+          name,
+          categoryId: CategoryId,
+          tel,
+          address,
+          description,
+          image,
+          openingHours: opening_hours,
+        };
+
+
+watch:{
+  initialRestaurant(newValue,oldValue){
+    console.log('watch',{newValue,oldValue})
+  }
+}
+
+      } catch (error) {
+        console.log("error", error);
+      }
     },
 
     handleAfterSubmit(formData) {
