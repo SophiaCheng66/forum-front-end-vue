@@ -39,7 +39,7 @@
         type="submit"
         :disabled="isProcessing"
       >
-        Submit
+        {{ isProcessing ? "處理中" : "送出" }}
       </button>
 
       <div class="text-center mb-3">

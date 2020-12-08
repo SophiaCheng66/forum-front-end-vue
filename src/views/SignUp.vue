@@ -62,8 +62,12 @@
         />
       </div>
 
-      <button class="btn btn-lg btn-primary btn-block mb-3" type="submit">
-        Submit
+      <button
+        class="btn btn-lg btn-primary btn-block mb-3"
+        type="submit"
+        :disabled="isProcessing"
+      >
+        {{ isProcessing ? "處理中" : "送出" }}
       </button>
 
       <div class="text-center mb-3">
@@ -78,27 +82,78 @@
 </template>
 
 <script>
+import signupAPI from "../apis/signUp.js";
+import { Toast } from "../utility/helpers.js";
+
 export default {
+  name: "SignUp",
   data() {
     return {
       name: "",
       email: "",
       password: "",
       passwordCheck: "",
+      isProcessing: false,
     };
   },
 
   methods: {
-    handleSignUp() {
-      const data = {
-        name: this.name,
-        email: this.email,
-        password: this.password,
-        passwordCheck: this.passwordCheck,
-      };
+    async handleSignUp() {
+      try {
+        const data1 = {
+          name: this.name,
+          email: this.email,
+          password: this.password,
+          passwordCheck: this.passwordCheck,
+        };
 
-      //將資料送到後端註冊
-      console.log(JSON.stringify(data));
+        if (!this.name) {
+          Toast.fire({
+            icon: "warning",
+            title: "請輸入姓名，謝謝!",
+          });
+          return;
+        }
+
+        if (!this.email) {
+          Toast.fire({
+            icon: "warning",
+            title: "請輸入email，謝謝!",
+          });
+          return;
+        }
+
+        if (!this.password || !this.passwordCheck) {
+          Toast.fire({
+            icon: "warning",
+            title: "請輸密碼，謝謝!",
+          });
+          return;
+        }
+
+        this.isProcessing = true;
+
+        //將資料送到後端註冊
+        const response = await signupAPI.create({ data1 });
+
+        console.log(response);
+        const { data } = response;
+        if (data.status !== "success") {
+          throw new Error(data.status);
+        }
+
+        this.$router.push({ name: "sign-in" });
+
+        //以下為把資料存成JSON格式
+        // console.log(JSON.stringify(data));
+      } catch (error) {
+        this.isProcessing = false;
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "目前無法註冊，請稍後再試",
+        });
+      }
     },
   },
 };
