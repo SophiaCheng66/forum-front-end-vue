@@ -172,6 +172,16 @@ export default {
     // };
   },
 
+  watch: {
+    initialRestaurant(newValue, oldValue) {
+      // console.log("watch", { newValue, oldValue });
+      this.restaurant = {
+        ...this.restaurant, //過去已經有的值拿來當預設值
+        ...newValue, //帶入從後端取回來的值(initialRestaurant)
+      };
+    },
+  },
+
   methods: {
     async fetchCategories() {
       try {
