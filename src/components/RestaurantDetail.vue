@@ -88,6 +88,16 @@ export default {
     };
   },
 
+  watch: {
+    initialRestaurant(newValue) {
+      // console.log(newValue, oldValue);
+      this.restaurant = {
+        ...this.restaurant,
+        ...newValue,
+      };
+    },
+  },
+
   methods: {
     deleteFavorite() {
       this.restaurant = {

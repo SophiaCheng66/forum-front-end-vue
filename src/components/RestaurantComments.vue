@@ -31,16 +31,22 @@
 // 載入撰寫好的 mixin
 import { fromNowFilter } from "../utility/mixins.js";
 // console.log({ fromNowFilter });
-const dummyUser = {
-  currentUser: {
-    id: 1,
-    name: "管理者",
-    email: "root@example.com",
-    image: "https://i.pravatar.cc/300",
-    isAdmin: true,
-  },
-  isAuthenticated: true,
-};
+import { mapState } from "vuex";
+import commentsAPI from "../apis/comments.js";
+import { Toast } from "../utility/helpers.js";
+
+//照著專案的規劃，只有管理員才能刪除使用者評論，因此只有管理員看到刪除按鈕。
+// 讓我們先設定一個 dummyUser 來模擬登入使用者
+// const dummyUser = {
+//   currentUser: {
+//     id: 1,
+//     name: "管理者",
+//     email: "root@example.com",
+//     image: "https://i.pravatar.cc/300",
+//     isAdmin: true,
+//   },
+//   isAuthenticated: true,
+// };
 
 export default {
   // 透過 mixins 屬性將撰寫好的 mixin 放入
@@ -52,18 +58,35 @@ export default {
     },
   },
 
-  data() {
-    return {
-      currentUser: dummyUser.currentUser,
-    };
+  // data() {
+  //   return {
+  //     currentUser: dummyUser.currentUser,
+  //   };
+  // },
+  computed: {
+    ...mapState(["currentUser"]),
   },
 
   methods: {
-    handleDeleteButtonClick(commentId) {
-      console.log("handleDeleteButtonClick", commentId);
-      // TODO: 請求 API 伺服器刪除 id 為 commentId 的評論(資料庫刪除)
-      // 觸發父層事件 - $emit( '事件名稱' , 傳遞的資料 )
-      this.$emit("after-delete-comment", commentId);
+    async handleDeleteButtonClick(commentId) {
+      try {
+        //請求 API 伺服器刪除 id 為 commentId 的評論(資料庫刪除)
+
+        const response = await commentsAPI.comments.delete({ commentId });
+        console.log(response);
+        const { data } = response;
+        if (data.status !== "success") {
+          throw new Error(data.status);
+        }
+        // 觸發父層事件 - $emit( '事件名稱' , 傳遞的資料 )
+        this.$emit("after-delete-comment", commentId);
+      } catch (error) {
+        console.log("error".error);
+        Toast.fire({
+          icon: "error",
+          title: "無法刪除評論，請稍後再試",
+        });
+      }
     },
   },
 };
