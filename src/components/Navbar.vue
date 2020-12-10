@@ -51,40 +51,55 @@
 
 <script>
 //假資料，串 API 之前，模擬API回傳的內容
-const dummyUser = {
-  currentUser: {
-    id: 1,
-    name: "管理者",
-    email: "root@example.com",
-    image: "https://i.pravatar.cc/300",
-    isAdmin: true,
-  },
-  isAuthenticated: true,
-};
+// const dummyUser = {
+//   currentUser: {
+//     id: 1,
+//     name: "管理者",
+//     email: "root@example.com",
+//     image: "https://i.pravatar.cc/300",
+//     isAdmin: true,
+//   },
+//   isAuthenticated: true,
+// };
 
+
+//mapState可在裡面放入想從vues裡面取出的資料
+import {mapState} from 'vuex'
 export default {
-  data() {
-    return {
-      currentUser: {
-        id: -1,
-        name: "",
-        email: "",
-        image: "",
-        isAdmin: false,
-      },
-      isAuthenticated: false,
-    };
-  }, //data
+  //computed會偵測放在computed裡面的資料有沒有改變，有改變的話就會重新做計算
+  computed:{
 
-  created() {
-    this.fetchUser();
-  },
+//要把mapState做一個解構賦值，解開來之後，Navbar就可以直接取store裡的currentUser和store裡的isAuthenticated
+...mapState(['currentUser', 'isAuthenticated'])
+}
+}
+  
+  
+  
+</script>
 
-  methods: {
-    fetchUser() {
-      this.currentUser = {
-        ...this.currentUser,
-        ...dummyUser.currentUser,
+  // data() {
+  //   return {
+  //     currentUser: {
+  //       id: -1,
+  //       name: "",
+  //       email: "",
+  //       image: "",
+  //       isAdmin: false,
+  //     },
+  //     isAuthenticated: false,
+  //   };
+  // }, //data
+
+  // created() {
+  //   this.fetchUser();
+  // },
+
+  // methods: {
+  //   fetchUser() {
+  //     this.currentUser = {
+  //       ...this.currentUser,
+  //       ...dummyUser.currentUser,
         //我們先透過 fetchUser 來模擬「把 dummyUser 蓋過 currentUser」的動作 (這裡用了 spread 運算子把兩組資料打開，先打開 this.currentUser，再打開 dummyUser.currentUser，因此在 key 值相同時，dummyUser.currentUser 會覆蓋之前的資料)。
         //  this.currentUser ={
         // id: -1,
@@ -99,10 +114,8 @@ export default {
         // image: "https://i.pravatar.cc/300",
         // isAdmin: true,
         //  }
-      };
-      this.isAuthenticated = dummyUser.isAuthenticated;
-    },
-  },
-};
-</script>
+      // };
+      // this.isAuthenticated = dummyUser.isAuthenticated;
+  //   },
+  // },
 
