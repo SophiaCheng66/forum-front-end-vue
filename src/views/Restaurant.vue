@@ -93,7 +93,7 @@ export default {
         console.log(response);
 
         if (response.statusText !== "OK") {
-          throw new Error(statusText);
+          throw new Error(response.statusText);
         }
 
         const { data } = response;

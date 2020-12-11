@@ -76,7 +76,7 @@ export default {
         console.log(response);
         const { data } = response;
         if (data.status !== "success") {
-          throw new Error(data.status);
+          throw new Error(data.message);
         }
         // 觸發父層事件 - $emit( '事件名稱' , 傳遞的資料 )
         this.$emit("after-delete-comment", commentId);

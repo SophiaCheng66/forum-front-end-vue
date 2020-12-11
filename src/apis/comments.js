@@ -10,8 +10,8 @@ export default {
 
     },
 
-    create(data) {
-      return apiHelper.post('/comments', data, { headers: { Authorization: `Bearer ${getToken()}` } })
+    create({ data1 }) {
+      return apiHelper.post('/comments', { data1 }, { headers: { Authorization: `Bearer ${getToken()}` } })
 
     },
 
