@@ -39,7 +39,7 @@
               type="submit"
               class="btn btn-danger"
               v-else-if="profile.isFollowed"
-              @click.stop.prevent="cancelFollowing"
+              @click.stop.prevent="cancelFollowing(profile.id)"
             >
               取消追蹤
             </button>
@@ -47,7 +47,7 @@
               v-else
               type="submit"
               class="btn btn-primary"
-              @click.stop.prevent="addFollowing"
+              @click.stop.prevent="addFollowing(profile.id)"
             >
               追蹤
             </button>
@@ -60,6 +60,8 @@
 </template>
 
 <script>
+import userAPI from "../apis/user.js";
+import { Toast } from "../utility/helpers.js";
 export default {
   props: {
     initialprofile: {
@@ -94,17 +96,47 @@ export default {
   },
 
   methods: {
-    cancelFollowing() {
-      this.profile = {
-        ...this.profile,
-        isFollowed: false,
-      };
+    async cancelFollowing(userId) {
+      try {
+        const response = await userAPI.deleteFollowing({ userId });
+        console.log(response);
+        const { data } = response;
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+
+        this.profile = {
+          ...this.profile,
+          isFollowed: false,
+        };
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "目前無法取消追蹤，請稍後再試",
+        });
+      }
     },
-    addFollowing() {
-      this.profile = {
-        ...this.profile,
-        isFollowed: true,
-      };
+    async addFollowing(userId) {
+      try {
+        const response = await userAPI.addFollowing({ userId });
+        console.log(response);
+        const { data } = response;
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+
+        this.profile = {
+          ...this.profile,
+          isFollowed: true,
+        };
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "目前無法加入追蹤，請稍後再試",
+        });
+      }
     },
   },
 };

@@ -40,31 +40,14 @@ export default {
       type: Object,
       required: true,
     },
-
-    // initialUsersDatasList: {
-    //   type: Array,
-    //   required: true,
-    // },
   },
   data() {
     return {
       usersData: this.initialUsers,
-      // UsersDatasList: this.initialUsersDatasList,
-      // UsersDatasListId: -1,
     };
   },
 
-  // created() {
-  //   this.fetchUsersDatasList();
-  // },
-
   methods: {
-    // fetchUsersDatasList() {
-    //   const { data } = this.UsersDatasList;
-    //   const { id } = data;
-    //   UsersDatasListId = id;
-    // },
-
     async cancelFollowed(userId) {
       try {
         const response = await userAPI.deleteFollowing({ userId });

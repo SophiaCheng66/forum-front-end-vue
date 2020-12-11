@@ -84,17 +84,18 @@ import UserCommentsCard from "../components/UserCommentsCard.vue";
 import UserFavoritedRestaurantsCard from "../components/UserFavoritedRestaurantsCard.vue";
 import userAPI from "../apis/user.js";
 import { Toast } from "../utility/helpers.js";
+import { mapState } from "vuex";
 
-const dummyUser = {
-  currentUser: {
-    id: 1,
-    name: "管理者",
-    email: "root@example.com",
-    image: "https://i.pravatar.cc/300",
-    isAdmin: true,
-  },
-  isAuthenticated: true,
-};
+// const dummyUser = {
+//   currentUser: {
+//     id: 1,
+//     name: "管理者",
+//     email: "root@example.com",
+//     image: "https://i.pravatar.cc/300",
+//     isAdmin: true,
+//   },
+//   isAuthenticated: true,
+// };
 
 export default {
   name: "User",
@@ -129,8 +130,11 @@ export default {
       Comments: [],
       FavoritedRestaurants: [],
       isFollowed: false,
-      currentUser: dummyUser.currentUser,
+      // currentUser: dummyUser.currentUser,
     };
+  },
+  computed: {
+    ...mapState(["currentUser"]),
   },
 
   created() {
@@ -149,6 +153,10 @@ export default {
       try {
         const response = await userAPI.get({ userId });
         console.log(response);
+
+        if (response.statusText !== "OK") {
+          throw new Error(data.message);
+        }
         const { data } = response;
         const { profile } = data;
         const { isFollowed } = data;
@@ -184,9 +192,13 @@ export default {
           followingsLength: profile.Followings.length,
           followersLength: profile.Followers.length,
         };
-        // this.Followings = dummyData.profile.Followings,
+        this.Comments = Comments.filter((Comment) => Comment.Restaurant);
       } catch (error) {
         console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法取得使用者資料，請稍後再試",
+        });
       }
     },
   },
