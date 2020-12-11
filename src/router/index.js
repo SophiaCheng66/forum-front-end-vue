@@ -66,7 +66,7 @@ const router = new Router({
       component: () => import('../views/UsersTop.vue')
     },
     {
-      path: '/users/detail',
+      path: '/users/detail/:id',
       name: 'users-detail',
       //動態載入
       component: () => import('../views/User.vue')

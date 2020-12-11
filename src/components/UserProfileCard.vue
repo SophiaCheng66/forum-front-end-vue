@@ -83,6 +83,16 @@ export default {
     };
   },
 
+  watch: {
+    initialprofile(newValue) {
+      console.log({ newValue });
+      this.profile = {
+        ...this.profile,
+        ...newValue,
+      };
+    },
+  },
+
   methods: {
     cancelFollowing() {
       this.profile = {
