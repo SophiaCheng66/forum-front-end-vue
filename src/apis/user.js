@@ -40,6 +40,10 @@ export default {
 
   addFollowing({ userId }) {
     return apiHelper.post(`/following/${userId}`, null, { headers: { Authorization: `Bearer ${getToken()}` } })
+  },
+
+  update({ userId }, formData) {
+    return apiHelper.put(`/users/${userId}`, formData, { headers: { Authorization: `Bearer ${getToken()}` } })
   }
 
 

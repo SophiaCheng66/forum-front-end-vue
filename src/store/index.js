@@ -12,8 +12,9 @@ export default new Vuex.Store({
       name: '',
       email: '',
       image: '',
-      isAdmin: false
+      isAdmin: true
     },
+
     isAuthenticated: false
   },
   //用來修改state的方法，用commit發動 mutations
@@ -22,10 +23,12 @@ export default new Vuex.Store({
       state.currentUser = {
         ...state.currentUser,
         // 將 API 取得的 currentUser 覆蓋掉 Vuex state 中的 currentUser
-        ...currentUser
+        ...currentUser,
+
       }
       // 將使用者的登入狀態改為 true
       state.isAuthenticated = true
+
     }
   },
   //透過API請求資料，用dispatch發動actions
@@ -44,7 +47,9 @@ export default new Vuex.Store({
           name,
           email,
           image,
-          isAdmin } = data
+          isAdmin
+        } = data
+
 
         //用commit連結取得的資料
         commit('setCurrentUser', {
