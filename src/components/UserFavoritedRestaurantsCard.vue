@@ -5,11 +5,11 @@
     </div>
     <div class="card-body">
       <router-link
-        :to="{ name: 'restaurant', params: { id: FavoritedRestaurants.id } }"
+        v-for="FavoritedRestaurant in FavoritedRestaurants"
+        :key="FavoritedRestaurant.id"
+        :to="{ name: 'restaurant', params: { id: FavoritedRestaurant.id } }"
       >
         <img
-          v-for="FavoritedRestaurant in FavoritedRestaurants"
-          :key="FavoritedRestaurant.id"
           :src="FavoritedRestaurant.image"
           width="60"
           height="60"

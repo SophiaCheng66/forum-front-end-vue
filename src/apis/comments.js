@@ -11,7 +11,7 @@ export default {
     },
 
     create({ data1 }) {
-      return apiHelper.post('/comments', { data1 }, { headers: { Authorization: `Bearer ${getToken()}` } })
+      return apiHelper.post('/comments', data1, { headers: { Authorization: `Bearer ${getToken()}` } })
 
     },
 

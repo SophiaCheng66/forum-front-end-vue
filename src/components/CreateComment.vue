@@ -46,15 +46,15 @@ export default {
 
         const data1 = {
           text: this.text,
-          RestaurantId: this.restaurantId,
-          User: {
-            id: this.currentUser.id,
-            name: this.currentUser.name,
-            createdAt: new Date(),
-          },
+          restaurantId: this.restaurantId,
+          // User: {
+          //   id: this.currentUser.id,
+          //   name: this.currentUser.name,
+          //   createdAt: new Date(),
+          // },
         };
 
-        const response = await commentsAPI.comments.create({ data1 });
+        const response = await commentsAPI.comments.create( {data1} );
 
         console.log(response);
         const { data } = response;

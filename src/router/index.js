@@ -3,12 +3,11 @@ import Router from 'vue-router'
 import NotFound from '../views/NotFound.vue'
 import SignIn from '../views/SignIn.vue'
 import Restaurants from '../views/Restaurants.vue'
-import store from '../store'
 
 
 Vue.use(Router)
 
-const router = new Router({
+export default new Router({
   linkExactActiveClass: 'active',
   routes: [
     {
@@ -131,18 +130,9 @@ const router = new Router({
   ]
 })
 
-//beforeEach追蹤整個app的路由有沒有變化，beforeRouteUpdate只用在component裡
-
-//在這用dispatch發動actions裡的fetchCurrentUser()，讓每一次網頁改變，都會重新拉取使用者資料
-router.beforeEach((to, from, next) => {
-  store.dispatch('fetchCurrentUser')
-
-  next()
-})
-
 // const router = new Router({
 //linkExactActiveClass: 'active',
 //   routes
 // })
 
-export default router
+// export default router

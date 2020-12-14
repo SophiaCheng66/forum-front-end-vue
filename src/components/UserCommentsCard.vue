@@ -7,14 +7,14 @@
         </div>
         <div class="card-body">
           <router-link
+            v-for="Comment in Comments"
+            :key="Comment.id"
             :to="{
               name: 'restaurant',
-              params: { id: Comments.id },
+              params: { id: Comment.Restaurant.id },
             }"
           >
             <img
-              v-for="Comment in Comments"
-              :key="Comment.id"
               :src="Comment.Restaurant.image"
               width="60"
               height="60"

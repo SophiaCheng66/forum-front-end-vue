@@ -34,11 +34,7 @@
         />
       </div>
 
-      <button
-        type="submit"
-        class="btn btn-primary"
-        :disabled="user.isProcessing"
-      >
+      <button type="submit" class="btn btn-primary" :disabled="isProcessing">
         {{ user.isProcessing ? "處理中..." : "Submit" }}
       </button>
     </form>
@@ -58,8 +54,8 @@ export default {
         name: "",
         image: "",
         isAdmin: true,
-        isProcessing: false,
       },
+      isProcessing: false,
     };
   },
 
@@ -119,7 +115,7 @@ export default {
         console.log(event.target);
         const form = event.target;
         const formData = new FormData(form);
-        this.user.isProcessing = true;
+        this.isProcessing = true;
         const response = await uesrAPI.update({
           userId: this.user.id,
           formData,
@@ -141,7 +137,7 @@ export default {
         // }
       } catch (error) {
         console.log("error", error);
-        this.user.isProcessing = false;
+        this.isProcessing = false;
         Toast.fire({
           icon: "error",
           title: "無法更新使用者資料，請稍後再試",
