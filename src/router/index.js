@@ -7,7 +7,7 @@ import Restaurants from '../views/Restaurants.vue'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   linkExactActiveClass: 'active',
   routes: [
     {
@@ -135,4 +135,9 @@ export default new Router({
 //   routes
 // })
 
-// export default router
+router.beforeEach(to, from, next => {
+  store.dispatch('fetchCurrentUser')
+  next()
+})
+
+export default router

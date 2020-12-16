@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  // state 屬性：與 Vue 物件內的 data 屬性類似，是放置資料的地方
   state: {
     currentUser: {
       id: -1,
@@ -14,6 +15,8 @@ export default new Vuex.Store({
     },
     isAuthenticated: false
   },
+  // mutations 屬性：想要修改 state 的資料時，會在 mutations 裡設定函式
+  //commit取用mutations裡的method
   mutations: {
     setCurrentUser(state, currentUser) {
       state.currentUser = {
@@ -23,8 +26,17 @@ export default new Vuex.Store({
       }
       // 將使用者的登入狀態改為 true
       state.isAuthenticated = true
+    },
+
+    revokeAuthentication(state) {
+      state.currentUser = {}
+      localStorage.removeItem('token')
+      state.isAuthenticated = false
+
     }
   },
+  // action 屬性：設定其他的非同步函式，例如發送 API 請求等等
+  //dispatch取用 actions的method
   actions: {
     async fetchCurrentUser({ commit }) {
       try {

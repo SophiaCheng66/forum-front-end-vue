@@ -39,6 +39,7 @@
           <button
             type="button"
             class="btn btn-sm btn-outline-success my-2 my-sm-0"
+            @click="logout"
           >
             登出
           </button>
@@ -62,20 +63,21 @@
 //   isAuthenticated: true,
 // };
 
-
 //mapState可在裡面放入想從vues裡面取出的資料
-import {mapState} from 'vuex'
+import { mapState } from "vuex";
 export default {
   //computed會偵測放在computed裡面的資料有沒有改變，有改變的話就會重新做計算
-  computed:{
-
-//要把mapState做一個解構賦值，解開來之後，Navbar就可以直接取store裡的currentUser和store裡的isAuthenticated
-...mapState(['currentUser', 'isAuthenticated'])
-}
-}
-  
-  
-  
+  computed: {
+    //要把mapState做一個解構賦值，解開來之後，Navbar就可以直接取store裡的currentUser和store裡的isAuthenticated
+    ...mapState(["currentUser", "isAuthenticated"]),
+  },
+  methods: {
+    logout() {
+      this.$store.commit("revokeAuthentication");
+      this.$router.push("/signin");
+    },
+  },
+};
 </script>
 
   // data() {
