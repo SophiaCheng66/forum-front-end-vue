@@ -121,7 +121,6 @@ const router = new Router({
       //動態載入
       component: () => import('../views/AdminUsers.vue')
     },
-
     {
       path: '/*',
       name: 'not-found',

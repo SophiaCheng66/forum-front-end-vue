@@ -135,7 +135,7 @@ export default {
         localStorage.setItem("token", data.token);
 
         //透過setCurrentUser把使用者資料存到Vuex的state中，要取用Vuex裡的mutations就要用this.$store.commit呼叫在store裡mutations裡的methods，第一個參數放mutations要引用的method的method名，第二個參數帶入從後端回來的data.user賦值給setCurrentUser裡的currentUser
-        this.$store.commit('setCurrentUser',data.user)
+        this.$store.commit("setCurrentUser", data.user);
 
         this.$router.push("/restaurants");
       } catch (error) {

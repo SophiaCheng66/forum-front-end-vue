@@ -92,7 +92,7 @@
 
 <script>
 import { v4 as uuidv4 } from "uuid";
-import AdminNav from "@/components/AdminNav";
+import AdminNav from "../components/AdminNav";
 // import { v4 as uuidv4 } from "uuid";
 import adminAPI from "../apis/admin.js";
 import { Toast } from "../utility/helpers.js";
