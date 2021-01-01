@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import NotFound from '../views/NotFound.vue'
 import SignIn from '../views/SignIn.vue'
 import Restaurants from '../views/Restaurants.vue'
+import store from '../store'
 
 
 Vue.use(Router)
@@ -130,13 +131,51 @@ const router = new Router({
 })
 
 // const router = new Router({
-//linkExactActiveClass: 'active',
+// linkExactActiveClass: 'active',
 //   routes
+
 // })
 
-router.beforeEach(to, from, next => {
-  store.dispatch('fetchCurrentUser')
+//每次切換路由都會經過這個判斷
+router.beforeEach(async (to, from, next) => {
+  const token = localStorage.getItem('token')
+  let isAuthenticated = false
+
+  // 有token的情況下才向後端做驗證
+  if (token) {
+    isAuthenticated = await store.dispatch('fetchCurrentUser')
+  }
+
+  // 如果 token 無效且使用者下一步不是要到sign-in則轉址到登入頁，若沒有&& to.name !== 'sign-in'則會造成無窮迴圈
+  // if (!isAuthenticated && to.name !== 'sign-in') {
+  //   next('/signin')
+  //   return
+  // }
+
+  // if (isAuthenticated && to.name === 'sign-in') {
+  //   next('/restaurants')
+  //   return
+  // }
+
+
+  const pathsWithoutAuthentication = ['sign-up', 'sign-in']
+
+  //如果 token 無效而且使用者要去的地方的name不包括'sign-up'和'sign-in'就把它導回'/signin'頁
+  //to.name是使用者即將要去的頁面，使用者即將要去的頁面有沒有被包含在 pathsWithoutAuthentication這2頁裡面
+  if (!isAuthenticated && !pathsWithoutAuthentication.includes(to.name)) {
+    next('/signin')
+    return
+  }
+
+  //如果token有效而且使用者要去的地方的name包括pathsWithoutAuthentication這2頁裡面，就把它導回'/restaurants'
+  if (isAuthenticated && pathsWithoutAuthentication.includes(to.name)) {
+    next('/restaurants')
+    return
+  }
+
+
   next()
 })
+
 
 export default router
