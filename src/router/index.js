@@ -8,6 +8,14 @@ import store from '../store'
 
 Vue.use(Router)
 
+const authorizeIsAdmin = (to, from, next) => {
+  const currentUser = store.state.currentUser
+  if (currentUser && !currentUser.isAdmin) {
+    next('/*')
+    return
+  }
+  next()
+}
 const router = new Router({
   linkExactActiveClass: 'active',
   routes: [
@@ -81,7 +89,19 @@ const router = new Router({
       path: '/admin/restaurants',
       name: 'admin-restaurants',
       //動態載入
-      component: () => import('../views/AdminRestaurants.vue')
+      component: () => import('../views/AdminRestaurants.vue'),
+      beforeEnter: authorizeIsAdmin
+      // beforeEnter：在進入到路由之前，可先執行function
+      //把這個方法抽成一個function
+      // beforeEnter: (to, from, next) => {
+      //   const currentUser = store.state.currentUser
+      //   if (currentUser && !currentUser.isAdmin) {
+      //     next('/*')
+      //     return
+      //   }
+      //   next()
+      // }
+
     },
     //有指定名稱的路由，都需要放在動態路由前
     {
@@ -94,13 +114,15 @@ const router = new Router({
       path: '/admin/restaurants/new',
       name: 'admin-restaurant-new',
       //動態載入
-      component: () => import('../views/AdminRestaurantNew.vue')
+      component: () => import('../views/AdminRestaurantNew.vue'),
+      beforeEnter: authorizeIsAdmin
     },
     {
       path: '/admin/restaurants/:id/edit',
       name: 'admin-restaurantEdit',
       //動態載入
-      component: () => import('../views/AdminRestaurantEdit.vue')
+      component: () => import('../views/AdminRestaurantEdit.vue'),
+      beforeEnter: authorizeIsAdmin
     },
 
     {
@@ -108,19 +130,22 @@ const router = new Router({
       path: '/admin/restaurants/:id',
       name: 'admin-restaurant',
       //動態載入
-      component: () => import('../views/AdminRestaurant.vue')
+      component: () => import('../views/AdminRestaurant.vue'),
+      beforeEnter: authorizeIsAdmin
     },
     {
       path: '/admin/categories',
       name: 'admin-categories',
       //動態載入
-      component: () => import('../views/AdminCategories.vue')
+      component: () => import('../views/AdminCategories.vue'),
+      beforeEnter: authorizeIsAdmin
     },
     {
       path: '/admin/users',
       name: 'admin-users',
       //動態載入
-      component: () => import('../views/AdminUsers.vue')
+      component: () => import('../views/AdminUsers.vue'),
+      beforeEnter: authorizeIsAdmin
     },
     {
       path: '/*',
@@ -139,10 +164,12 @@ const router = new Router({
 //每次切換路由都會經過這個判斷
 router.beforeEach(async (to, from, next) => {
   const token = localStorage.getItem('token')
-  let isAuthenticated = false
+  const tokenInStore = store.state.token
+  //若有登入成功，isAuthenticated = true
+  let isAuthenticated = store.state.isAuthenticated
 
-  // 有token的情況下才向後端做驗證
-  if (token) {
+  // 有token而且token有改變的情況下(store裡的token和localStorage裡的token不一樣)才向後端做驗證這個token是不是有效的
+  if (token && token !== tokenInStore) {
     isAuthenticated = await store.dispatch('fetchCurrentUser')
   }
 

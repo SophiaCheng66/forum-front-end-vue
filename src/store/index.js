@@ -14,7 +14,8 @@ export default new Vuex.Store({
       image: '',
       isAdmin: false
     },
-    isAuthenticated: false
+    isAuthenticated: false,
+    token: ''
   },
   // mutations 屬性：想要修改 state 的資料時，會在 mutations 裡設定函式
   //commit取用mutations裡的method
@@ -26,12 +27,14 @@ export default new Vuex.Store({
         ...currentUser
       }
       // 將使用者的登入狀態改為 true
-      state.isAuthenticated = true
+      state.isAuthenticated = true,
+        state.token = localStorage.getItem('token')
     },
 
     revokeAuthentication(state) {
       state.currentUser = {}
       localStorage.removeItem('token')
+      state.token = ''
       state.isAuthenticated = false
 
     }
@@ -61,7 +64,8 @@ export default new Vuex.Store({
         return true
       } catch (error) {
         console.error(error.message)
-
+        //當從後端帶回來的當前使用者資料若是錯誤的，則用commit帶入登出的method，導回登入頁
+        commit('revokeAuthentication')
         return false
       }
     }
