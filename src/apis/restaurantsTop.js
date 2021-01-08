@@ -1,9 +1,9 @@
 import { apiHelper } from "../utility/helpers.js"
-const getToken = () => localStorage.getItem('token')
+// const getToken = () => localStorage.getItem('token')
 
 export default {
   getRestaurantsTop() {
-    return apiHelper.get('/restaurants/top', { headers: { Authorization: `Bearer ${getToken()}` } })
+    return apiHelper.get('/restaurants/top')
   }
 
 }
