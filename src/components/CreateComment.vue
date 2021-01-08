@@ -54,7 +54,7 @@ export default {
           // },
         };
 
-        const response = await commentsAPI.comments.create( {data1} );
+        const response = await commentsAPI.comments.create({ data1 });
 
         console.log(response);
         const { data } = response;
@@ -80,3 +80,10 @@ export default {
   },
 };
 </script>
+
+
+<style scoped>
+.form-group {
+  margin: 21px 0 8px;
+}
+</style>
