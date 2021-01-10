@@ -2,36 +2,39 @@
   <div class="container py-5">
     <!-- AdminNav Component -->
     <AdminNav />
+    <Spinner v-if="isLoading" />
 
-    <table class="table">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Email</th>
-          <th scope="col">Role</th>
-          <th scope="col" width="140">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="user in users" :key="user.id">
-          <th scope="row">{{ user.id }}</th>
-          <td>{{ user.email }}</td>
-          <td>{{ user.isAdmin ? "admin" : "user" }}</td>
-          <td>
-            <button
-              @click.stop.prevent="
-                toggleUserRole({ userId: user.id, isAdmin: user.isAdmin })
-              "
-              type="button"
-              class="btn btn-link"
-              v-if="currentUser.id !== user.id"
-            >
-              {{ user.isAdmin ? "set as user" : "set as admin" }}
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <template v-else>
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Email</th>
+            <th scope="col">Role</th>
+            <th scope="col" width="140">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="user in users" :key="user.id">
+            <th scope="row">{{ user.id }}</th>
+            <td>{{ user.email }}</td>
+            <td>{{ user.isAdmin ? "admin" : "user" }}</td>
+            <td>
+              <button
+                @click.stop.prevent="
+                  toggleUserRole({ userId: user.id, isAdmin: user.isAdmin })
+                "
+                type="button"
+                class="btn btn-link"
+                v-if="currentUser.id !== user.id"
+              >
+                {{ user.isAdmin ? "set as user" : "set as admin" }}
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </template>
   </div>
 </template>
 
@@ -40,7 +43,7 @@ import AdminNav from "../components/AdminNav.vue";
 import adminAPI from "../apis/admin.js";
 import { Toast } from "../utility/helpers.js";
 import { mapState } from "vuex";
-
+import Spinner from "../components/Spinner";
 // const dummyUser = {
 //   email: "root@example.com",
 //   id: 1,
@@ -54,11 +57,12 @@ export default {
   name: "AdminUsers",
   components: {
     AdminNav,
+    Spinner,
   },
   data() {
     return {
       users: [],
-
+      isLoading: true,
       // currentUser: {
       //   email: "",
       //   id: -1,
@@ -81,6 +85,7 @@ export default {
   methods: {
     async fetchUser() {
       try {
+        this.isLoading = true;
         const response = await adminAPI.users.get();
 
         console.log(response);
@@ -100,7 +105,9 @@ export default {
         //   name,
         //   isAuthenticated,
         // };
+        this.isLoading = false;
       } catch (error) {
+        this.isLoading = false;
         console.log("error", error);
         Toast.fire({
           icon: "error",

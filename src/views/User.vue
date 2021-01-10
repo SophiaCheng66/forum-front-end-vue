@@ -1,5 +1,5 @@
 <template>
-  <html>
+  <!-- <html>
     <head>
       <meta charset="utf-8" />
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -25,7 +25,7 @@
               >管理員後台</a
             >
             <!-- <span style="color: white; margin-right: 10px">管理者 您好</span> -->
-            <a href="/users/1" style="color: white; margin-right: 10px"
+  <!-- <a href="/users/1" style="color: white; margin-right: 10px"
               >管理者 您好</a
             >
             <a href="/logout"
@@ -35,45 +35,45 @@
             >
           </div>
         </div>
-      </nav>
-      <br />
-      <main role="main">
-        <div class="album py-5 bg-light">
-          <div class="container">
-            <!-- part1 -->
-            <UserProfileCard
-              :initialprofile="profile"
-              :isFollowed="isFollowed"
-              :initialcurrentUser="currentUser"
-            />
-            <!-- part2 -->
-            <div class="d-flex flex-row">
-              <div class="UserFollow">
-                <UserFollowingsCard :Followings="Followings" />
+      </nav> -->
+  <!-- <br /> -->
+  <main role="main">
+    <div class="album py-5 bg-light">
+      <div class="container">
+        <!-- part1 -->
+        <UserProfileCard
+          :initialprofile="profile"
+          :isFollowed="isFollowed"
+          :initialcurrentUser="currentUser"
+        />
+        <!-- part2 -->
+        <div class="d-flex flex-row">
+          <div class="UserFollow">
+            <UserFollowingsCard :Followings="Followings" />
 
-                <br />
-                <!-- part3 -->
-                <UserFollowersCard :Followers="Followers" />
-              </div>
+            <br />
+            <!-- part3 -->
+            <UserFollowersCard :Followers="Followers" />
+          </div>
 
-              <!-- part4 -->
-              <div class="UserCommentsCard">
-                <UserCommentsCard :Comments="Comments" />
+          <!-- part4 -->
+          <div class="UserCommentsCard">
+            <UserCommentsCard :Comments="Comments" />
 
-                <br />
-                <!-- part5 -->
-                <div class="UserFavoritedRestaurantsCard">
-                  <UserFavoritedRestaurantsCard
-                    :FavoritedRestaurants="FavoritedRestaurants"
-                  />
-                </div>
-              </div>
+            <br />
+            <!-- part5 -->
+            <div class="UserFavoritedRestaurantsCard">
+              <UserFavoritedRestaurantsCard
+                :FavoritedRestaurants="FavoritedRestaurants"
+              />
             </div>
           </div>
         </div>
-      </main>
-    </body>
-  </html>
+      </div>
+    </div>
+  </main>
+  <!-- </body>
+  </html> -->
 </template>
 
 <script>

@@ -2,7 +2,7 @@
   <div class="card mb-3">
     <div class="row no-gutters">
       <div class="col-md-4">
-        <img :src="profile.image" width="300px" height="300px" />
+        <img :src="profile.image | emptyImage" width="300px" height="300px" />
       </div>
       <div class="col-md-8">
         <div class="card-body">
@@ -60,9 +60,11 @@
 </template>
 
 <script>
+import { emptyImageFilter } from "./../utility/mixins";
 import userAPI from "../apis/user.js";
 import { Toast } from "../utility/helpers.js";
 export default {
+  mixins: [emptyImageFilter],
   props: {
     initialprofile: {
       type: Object,

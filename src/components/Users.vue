@@ -2,7 +2,7 @@
   <div class="row text-center test">
     <div>
       <router-link :to="{ name: 'users-detail', params: { id: usersData.id } }">
-        <img :src="usersData.image" width="140px" height="140px" />
+        <img :src="usersData.image | emptyImage" width="140px" height="140px" />
       </router-link>
       <h2>{{ usersData.name }}</h2>
       <span class="badge badge-secondary"
@@ -31,9 +31,11 @@
 </template>
 
 <script>
+import { emptyImageFilter } from "./../utility/mixins";
 import userAPI from "../apis/user.js";
 import { Toast } from "../utility/helpers";
 export default {
+  mixins: [emptyImageFilter],
   name: "Users",
   props: {
     initialUsers: {

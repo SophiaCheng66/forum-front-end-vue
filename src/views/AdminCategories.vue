@@ -24,69 +24,75 @@
         </div>
       </div>
     </form>
-    <table class="table">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col" width="60">#</th>
-          <th scope="col">Category Name</th>
-          <th scope="col" width="210">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="category in categories" :key="category.id">
-          <th scope="row">
-            {{ category.id }}
-          </th>
+    <Spinner v-if="isLoading" />
+    <template v-else>
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col" width="60">#</th>
+            <th scope="col">Category Name</th>
+            <th scope="col" width="210">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="category in categories" :key="category.id">
+            <th scope="row">
+              {{ category.id }}
+            </th>
 
-          <td class="position-relative">
-            <div v-show="!category.isEditing" class="category-name">
-              {{ category.name }}
-            </div>
-            <input
-              v-show="category.isEditing"
-              v-model="category.name"
-              type="text"
-              class="form-control"
-            />
-            <span
-              @click.stop.prevent="handleCancel(category.id)"
-              v-show="category.isEditing"
-              class="cancel"
-            >
-              ✕
-            </span>
-          </td>
-          <td class="d-flex justify-content-between">
-            <button
-              v-show="!category.isEditing"
-              type="button"
-              class="btn btn-link mr-2"
-              @click.stop.prevent="toggleIsEditing(category.id)"
-            >
-              Edit
-            </button>
-            <button
-              v-show="category.isEditing"
-              type="button"
-              class="btn btn-link mr-2"
-              @click.stop.prevent="
-                updateCategory({ categoryId: category.id, name: category.name })
-              "
-            >
-              Save
-            </button>
+            <td class="position-relative">
+              <div v-show="!category.isEditing" class="category-name">
+                {{ category.name }}
+              </div>
+              <input
+                v-show="category.isEditing"
+                v-model="category.name"
+                type="text"
+                class="form-control"
+              />
+              <span
+                @click.stop.prevent="handleCancel(category.id)"
+                v-show="category.isEditing"
+                class="cancel"
+              >
+                ✕
+              </span>
+            </td>
+            <td class="d-flex justify-content-between">
+              <button
+                v-show="!category.isEditing"
+                type="button"
+                class="btn btn-link mr-2"
+                @click.stop.prevent="toggleIsEditing(category.id)"
+              >
+                Edit
+              </button>
+              <button
+                v-show="category.isEditing"
+                type="button"
+                class="btn btn-link mr-2"
+                @click.stop.prevent="
+                  updateCategory({
+                    categoryId: category.id,
+                    name: category.name,
+                  })
+                "
+              >
+                Save
+              </button>
 
-            <button
-              @click.stop.prevent="deleteCategory(category.id)"
-              type="button"
-              class="btn btn-link mr-2"
-            >
-              Delete
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+              <button
+                @click.stop.prevent="deleteCategory(category.id)"
+                type="button"
+                class="btn btn-link mr-2"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </template>
   </div>
 </template>
 
@@ -96,16 +102,19 @@ import AdminNav from "../components/AdminNav";
 // import { v4 as uuidv4 } from "uuid";
 import adminAPI from "../apis/admin.js";
 import { Toast } from "../utility/helpers.js";
+import Spinner from "../components/Spinner";
 export default {
   name: "AdminCategories",
   components: {
     AdminNav,
+    Spinner,
   },
   // 3. 定義 Vue 中使用的 data 資料
   data() {
     return {
       categories: [],
       newCategoryName: "",
+      isLoading: true,
     };
   },
   // 5. 調用 `fetchCategories` 方法
@@ -116,6 +125,7 @@ export default {
     // 4. 定義 `fetchCategories` 方法，把 `dummyData` 帶入 Vue 物件
     async fetchCategories() {
       try {
+        this.isLoading = true;
         const response = await adminAPI.categories.get();
 
         console.log(response);
@@ -138,7 +148,9 @@ export default {
           //nameCached用來儲存使用者修改餐廳名稱前的餐廳名稱
           nameCached: "",
         }));
+        this.isLoading = false;
       } catch (error) {
+        this.isLoading = false;
         console.log("error", error);
         Toast.fire({
           icon: "error",

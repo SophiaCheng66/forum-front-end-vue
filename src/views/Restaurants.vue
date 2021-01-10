@@ -1,27 +1,32 @@
-
-
 <template>
   <div class="container py-5">
     <NavTabs />
-    <!-- 餐廳類別標籤 RestaurantsNavpills -->
-    <RestaurantsNavPills :categories="categories" />
-    <div class="row">
-      <!-- 餐廳卡片 RestaurantCard -->
-      <RestaurantCard
-        v-for="restaurant in restaurants"
-        :key="restaurant.id"
-        :initialRestaurant="restaurant"
-      />
-    </div>
+    <Spinner v-if="isLoading" />
 
-    <!-- 分頁標籤 RestaurantPagination -->
-    <RestaurantsPagination
-      :currentPage="currentPage"
-      :totalPage="totalPage"
-      :previousPage="previousPage"
-      :categoryId="categoryId"
-      :nextPage="nextPage"
-    />
+    <template v-else>
+      <!-- 餐廳類別標籤 RestaurantsNavpills -->
+      <RestaurantsNavPills :categories="categories" />
+      <div class="row">
+        <!-- 餐廳卡片 RestaurantCard -->
+        <RestaurantCard
+          v-for="restaurant in restaurants"
+          :key="restaurant.id"
+          :initialRestaurant="restaurant"
+        />
+      </div>
+
+      <!-- 分頁標籤 RestaurantPagination -->
+      <RestaurantsPagination
+        v-if="totalPage.length > 1"
+        :currentPage="currentPage"
+        :totalPage="totalPage"
+        :previousPage="previousPage"
+        :categoryId="categoryId"
+        :nextPage="nextPage"
+      />
+
+      <div v-if="restaurants.length < 1">此類別目前無餐廳資料</div>
+    </template>
   </div>
 </template> 
 
@@ -32,6 +37,7 @@ import RestaurantsNavPills from "../components/RestaurantsNavPills.vue";
 import RestaurantsPagination from "../components/RestaurantsPagination.vue";
 import restaurantsAPI from "../apis/restaurants.js";
 import { Toast } from "../utility/helpers.js";
+import Spinner from "../components/Spinner";
 
 export default {
   name: "Restaurants",
@@ -40,6 +46,7 @@ export default {
     RestaurantCard,
     RestaurantsNavPills,
     RestaurantsPagination,
+    Spinner,
 
     //使用到template上是用組件的名字，也就是第一個NavTabs，可以自己取名，但大多都會取跟內容一樣的名字
   },
@@ -52,6 +59,7 @@ export default {
       totalPage: [],
       previousPage: -1,
       nextPage: -1,
+      isLoading: true,
     };
   },
 
@@ -73,6 +81,7 @@ export default {
   methods: {
     async fetchRestaurants({ queryPage, queryCategoryId }) {
       try {
+        this.isLoading = true;
         const response = await restaurantsAPI.getRestaurants({
           page: queryPage,
           categoryId: queryCategoryId,
@@ -99,7 +108,9 @@ export default {
         this.totalPage = totalPage;
         this.previousPage = prev;
         this.nextPage = next;
+        this.isLoading = false;
       } catch (error) {
+        this.isLoading = false;
         console.log("error", error);
         Toast.fire({
           icon: "error",
